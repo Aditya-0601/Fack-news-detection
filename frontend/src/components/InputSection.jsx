@@ -159,7 +159,7 @@ export function InputSection({ text, setText, onAnalyze, isLoading }) {
         }}
       >
         <span style={{ fontSize: '0.9rem' }}>ℹ️</span>
-        Tip: For best accuracy, submit articles with at least 300 words.
+        Tip: For best accuracy, submit articles with at least 300 words. Also try to avoid pasting links or images, as the AI is optimized for text analysis.
       </motion.div>
     </motion.div>
   );
