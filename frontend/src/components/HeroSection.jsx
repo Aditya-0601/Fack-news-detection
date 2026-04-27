@@ -54,7 +54,7 @@ export function HeroSection() {
               Next-Gen AI Analysis
             </div>
             <h1 style={{ fontSize: '4rem', margin: '0 0 1.5rem 0', lineHeight: 1.1 }}>
-              TruthGuard AI<br/>Detection System
+              Credible
             </h1>
             <p style={{ fontSize: '1.25rem', color: '#cbd5e1', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>
               Scroll down to watch the AI Core extract features, or skip to analyze an article instantly.

@@ -20,7 +20,7 @@ export function Navbar() {
           borderRadius: '50%', 
           background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))' 
         }}></div>
-        TruthGuard AI
+        Credible
       </div>
       <div style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
         Production Level Hybrid Architecture

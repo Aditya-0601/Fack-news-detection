@@ -86,6 +86,20 @@ export function InputSection({ text, setText, onAnalyze, isLoading }) {
           </button>
         </div>
       </div>
+      
+      {/* Helper text directly below the input box */}
+      <div style={{
+        marginTop: '8px',
+        marginLeft: '4px',
+        fontSize: '0.85rem',
+        color: '#9ca3af',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px'
+      }}>
+        <span style={{ fontSize: '1rem' }}>ℹ️</span>
+        Tip: For more precise AI analysis, we recommend submitting articles with a minimum of 300 words.
+      </div>
     </motion.div>
   );
 }
