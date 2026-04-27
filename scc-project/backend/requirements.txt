@@ -1,0 +1,11 @@
+# requirements.txt
+# Python dependencies for Flask backend
+
+flask
+flask-cors
+transformers
+torch
+gunicorn
+
+# Optional but recommended for production
+python-dotenv

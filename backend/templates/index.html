@@ -1,0 +1,139 @@
+<!-- templates/index.html -->
+<!-- Simple test frontend for Flask backend -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector - Test Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Fake News Detector</h1>
+            <p>AI-Powered BERT Model Analysis</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="newsText">Enter News Article or Headline:</label>
+                <textarea 
+                    id="newsText" 
+                    placeholder="Paste the news text you want to verify..."
+                    rows="8"
+                ></textarea>
+                <button id="analyzeBtn" onclick="analyzeNews()">
+                    <span id="btnText">🔍 Analyze News</span>
+                    <span id="btnLoader" class="loader" style="display: none;"></span>
+                </button>
+            </div>
+
+            <div id="resultSection" class="result-section" style="display: none;">
+                <div id="resultContent"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p><strong>Note:</strong> This is an AI prediction. Always verify with multiple sources.</p>
+        </footer>
+    </div>
+
+    <script>
+        async function analyzeNews() {
+            const newsText = document.getElementById('newsText').value.trim();
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
+            const resultSection = document.getElementById('resultSection');
+            const resultContent = document.getElementById('resultContent');
+
+            // Validation
+            if (!newsText) {
+                alert('Please enter some news text to analyze.');
+                return;
+            }
+
+            // Show loading state
+            analyzeBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+            resultSection.style.display = 'none';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: newsText })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Analysis failed');
+                }
+
+                const result = await response.json();
+                displayResult(result);
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultContent.innerHTML = `
+                    <div class="result-error">
+                        <h3>❌ Analysis Failed</h3>
+                        <p>Could not analyze the news. Please try again.</p>
+                    </div>
+                `;
+                resultSection.style.display = 'block';
+            } finally {
+                // Reset button state
+                analyzeBtn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoader.style.display = 'none';
+            }
+        }
+
+        function displayResult(result) {
+            const resultSection = document.getElementById('resultSection');
+            const resultContent = document.getElementById('resultContent');
+            
+            const isFake = result.prediction === 'Fake';
+            const emoji = isFake ? '⚠️' : '✅';
+            const className = isFake ? 'result-fake' : 'result-real';
+            
+            resultContent.innerHTML = `
+                <div class="${className}">
+                    <h2>${emoji} ${result.prediction} News</h2>
+                    <div class="confidence">
+                        <div class="confidence-label">
+                            <span>Confidence Level</span>
+                            <span class="confidence-value">${result.confidence.toFixed(2)}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill ${isFake ? 'fake' : 'real'}" 
+                                 style="width: ${result.confidence}%">
+                            </div>
+                        </div>
+                    </div>
+                    <p class="result-description">
+                        ${isFake 
+                            ? 'This content shows signs of misinformation. Please verify with multiple sources.'
+                            : 'This content appears to be legitimate based on AI analysis.'
+                        }
+                    </p>
+                </div>
+            `;
+            
+            resultSection.style.display = 'block';
+        }
+
+        // Allow Enter key to submit (Ctrl+Enter for new line)
+        document.getElementById('newsText').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                analyzeNews();
+            }
+        });
+    </script>
+</body>
+</html>
