@@ -99,7 +99,7 @@ export function Navbar() {
 
         <div className="university-affiliation interactive-item">
           <img
-            src="/university-seal.png"
+            src="/du.png"
             alt="Faculty of Technology, University of Delhi"
             className="university-seal"
           />
