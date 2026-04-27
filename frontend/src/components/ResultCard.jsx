@@ -28,8 +28,18 @@ export function ResultCard({ result }) {
               <h2 style={{ margin: 0, color: color, fontSize: '2.5rem', textTransform: 'uppercase', letterSpacing: '2px' }}>
                 {result.label} NEWS
               </h2>
-              <div style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+              <div style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', fontWeight: 600, marginBottom: '0.5rem' }}>
                 {confidencePercent}% Confidence Score
+              </div>
+              
+              {/* Visual Confidence Bar */}
+              <div style={{ width: '100%', maxWidth: '300px', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '9999px', overflow: 'hidden' }}>
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${confidencePercent}%` }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  style={{ height: '100%', background: color }}
+                />
               </div>
             </div>
           </div>
