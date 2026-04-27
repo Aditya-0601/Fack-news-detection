@@ -56,19 +56,23 @@ function App() {
       {/* Fixed navbar */}
       <Navbar />
 
-      <main style={{ minHeight: '100vh', paddingTop: '64px' }}>
+      <main style={{ minHeight: '100vh', paddingTop: '78px' }}>
         {/* Hero — passes result so glow zones can react */}
-        <HeroSection result={result} />
+        <section id="home">
+          <HeroSection result={result} />
+        </section>
 
         {/* Content zone sits above the scroll background */}
         <div style={{ position: 'relative', zIndex: 10 }}>
 
-          <InputSection
-            text={text}
-            setText={setText}
-            onAnalyze={handleAnalyze}
-            isLoading={isLoading}
-          />
+          <section id="analyze">
+            <InputSection
+              text={text}
+              setText={setText}
+              onAnalyze={handleAnalyze}
+              isLoading={isLoading}
+            />
+          </section>
 
           {/* Error banner */}
           {error && (
@@ -93,9 +97,9 @@ function App() {
           </div>
 
           {/* How it works section */}
-          <div style={{ marginTop: '5rem' }}>
+          <section id="pipeline" style={{ marginTop: '5rem' }}>
             <HowItWorks />
-          </div>
+          </section>
         </div>
       </main>
 

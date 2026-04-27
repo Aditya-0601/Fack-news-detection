@@ -31,6 +31,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+section {
+  scroll-margin-top: 80px;
+}
+
 /* ── Typography ── */
 h1 {
   font-size: 3.5rem;
@@ -522,4 +526,202 @@ p {
   pointer-events: none;
   z-index: 1;
   animation: glow-pulse 4s ease-in-out infinite;
+}
+
+/* ════════════════════════════
+   REACTIVE NAVBAR
+════════════════════════════ */
+.navbar-shell {
+  --cursor-x: 50%;
+  --cursor-y: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 78px;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(6, 12, 28, 0.82) 0%, rgba(2, 3, 8, 0.8) 100%),
+    rgba(3, 3, 8, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.2s ease, height 0.2s ease, padding 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+
+.navbar-shell.is-scrolled {
+  height: 68px;
+  padding: 0.7rem 2rem;
+  background:
+    linear-gradient(180deg, rgba(7, 14, 30, 0.92) 0%, rgba(2, 3, 8, 0.9) 100%),
+    rgba(3, 3, 8, 0.86);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.navbar-cursor-glow {
+  position: absolute;
+  left: var(--cursor-x);
+  top: var(--cursor-y);
+  width: 260px;
+  height: 260px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(92, 133, 255, 0.2) 0%, rgba(141, 98, 255, 0.12) 35%, transparent 75%);
+  opacity: 0.33;
+  filter: blur(18px);
+}
+
+.interactive-item {
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.interactive-item:hover {
+  transform: scale(1.03);
+  filter: brightness(1.14);
+  box-shadow: 0 0 16px rgba(79, 142, 247, 0.25);
+}
+
+.brand-wrap {
+  border: none;
+  background: transparent;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.brand-logo-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  box-shadow: 0 0 12px rgba(79, 142, 247, 0.6);
+  animation: glow-pulse 2.8s ease-in-out infinite;
+}
+
+.brand-wrap:hover .brand-logo-dot {
+  box-shadow: 0 0 18px rgba(79, 142, 247, 0.8), 0 0 26px rgba(155, 111, 245, 0.35);
+}
+
+.brand-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff, #c7d8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-links {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-link {
+  border: none;
+  cursor: pointer;
+  color: #a5afc2;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+}
+
+.nav-link.is-active {
+  color: #e6ecff;
+  background: linear-gradient(135deg, rgba(79, 142, 247, 0.22), rgba(155, 111, 245, 0.16));
+  box-shadow: 0 0 0 1px rgba(122, 156, 255, 0.35), 0 0 14px rgba(79, 142, 247, 0.22);
+}
+
+.navbar-meta {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--real-green);
+  box-shadow: 0 0 8px var(--real-green);
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+.university-affiliation {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-left: 0.8rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.8;
+}
+
+.university-seal {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.22);
+  box-shadow: 0 0 10px rgba(142, 117, 255, 0.2);
+  filter: brightness(0.72) saturate(0.75) contrast(1.05);
+}
+
+.university-affiliation-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.university-affiliation-text span {
+  font-size: 0.64rem;
+  color: #aab4c6;
+  letter-spacing: 0.02em;
+}
+
+.university-affiliation-text span:last-child {
+  color: #8b95a7;
+}
+
+@media (max-width: 980px) {
+  .navbar-links {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .university-affiliation-text {
+    display: none;
+  }
+
+  .status-indicator {
+    display: none;
+  }
 }

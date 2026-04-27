@@ -1,49 +1,113 @@
-/**
- * Navbar.jsx
- * Premium top navigation with glassmorphism, gradient logo dot, and status indicator.
- */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const NAV_SECTIONS = [
+  { id: 'home', label: 'Home' },
+  { id: 'analyze', label: 'Analyze' },
+  { id: 'pipeline', label: 'How it works' },
+];
 
 export function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 32);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionElements = NAV_SECTIONS
+      .map((section) => document.getElementById(section.id))
+      .filter(Boolean);
+
+    if (!sectionElements.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.6)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visibleEntry?.target?.id) {
+          setActiveSection(visibleEntry.target.id);
+        }
+      },
+      { threshold: [0.6] }
+    );
+
+    sectionElements.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavMouseMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    event.currentTarget.style.setProperty('--cursor-x', `${x}px`);
+    event.currentTarget.style.setProperty('--cursor-y', `${y}px`);
+  };
+
+  const scrollToSection = (sectionId) => {
+    const target = document.getElementById(sectionId);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleNavClick = (sectionId) => {
+    scrollToSection(sectionId);
+  };
+
   return (
-    <nav style={{
-      padding: '1.2rem 2rem',
-      borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      position: 'fixed',
-      top: 0, left: 0, right: 0,
-      zIndex: 100,
-      background: 'rgba(3, 3, 8, 0.85)',
-      backdropFilter: 'blur(16px)',
-      WebkitBackdropFilter: 'blur(16px)',
-    }}>
-      {/* Brand */}
-      <div style={{ fontWeight: 800, fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: '0.6rem', letterSpacing: '-0.02em' }}>
-        <div style={{
-          width: '22px', height: '22px', borderRadius: '50%',
-          background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))',
-          boxShadow: '0 0 12px rgba(79, 142, 247, 0.6)',
-        }} />
-        <span style={{
-          background: 'linear-gradient(135deg, #ffffff, #c7d8ff)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}>
-          Credible
-        </span>
+    <nav
+      className={`navbar-shell ${isScrolled ? 'is-scrolled' : ''}`}
+      onMouseMove={handleNavMouseMove}
+    >
+      <div className="navbar-cursor-glow" />
+
+      <button
+        type="button"
+        className="brand-wrap interactive-item"
+        onClick={() => handleNavClick('home')}
+      >
+        <span className="brand-logo-dot" />
+        <span className="brand-title">Credible</span>
+      </button>
+
+      <div className="navbar-links">
+        {NAV_SECTIONS.map((section) => (
+          <button
+            type="button"
+            key={section.id}
+            onClick={() => handleNavClick(section.id)}
+            className={`nav-link interactive-item ${activeSection === section.id ? 'is-active' : ''}`}
+          >
+            {section.label}
+          </button>
+        ))}
       </div>
 
-      {/* Status indicator */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
-        <span style={{
-          width: '7px', height: '7px', borderRadius: '50%',
-          background: 'var(--real-green)',
-          boxShadow: '0 0 8px var(--real-green)',
-          animation: 'glow-pulse 2.5s ease-in-out infinite',
-        }} />
-        Hybrid AI • Live
+      <div className="navbar-meta">
+        <div className="status-indicator interactive-item">
+          <span className="status-dot" />
+          Hybrid AI • Live
+        </div>
+
+        <div className="university-affiliation interactive-item">
+          <img
+            src="/university-seal.png"
+            alt="Faculty of Technology, University of Delhi"
+            className="university-seal"
+          />
+          <div className="university-affiliation-text">
+            <span>Faculty of Technology</span>
+            <span>University of Delhi</span>
+          </div>
+        </div>
       </div>
     </nav>
   );
