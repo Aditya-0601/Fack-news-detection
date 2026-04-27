@@ -1,7 +1,0 @@
-Flask
-flask-cors
-numpy
-xgboost
-transformers
-torch
-scikit-learn==1.5.2

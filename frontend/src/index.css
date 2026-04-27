@@ -1,13 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 :root {
-  --bg-color: #050505;
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1aa;
-  --accent-blue: #3b82f6;
-  --accent-purple: #8b5cf6;
-  --real-green: #10b981;
-  --fake-red: #ef4444;
+  --bg-color: #030308;
+  --text-primary: #f0f4ff;
+  --text-secondary: #8892a4;
+  --accent-blue: #4f8ef7;
+  --accent-purple: #9b6ff5;
+  --real-green: #10e88a;
+  --fake-red: #f04f4f;
   --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glow-green: rgba(16, 232, 138, 0.18);
+  --glow-red: rgba(240, 79, 79, 0.18);
+  --glow-blue: rgba(79, 142, 247, 0.2);
 }
 
 * {
@@ -17,20 +22,21 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography */
+/* ── Typography ── */
 h1 {
   font-size: 3.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
   margin-bottom: 1rem;
 }
 
@@ -38,37 +44,103 @@ h2 {
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
   margin-bottom: 1.5rem;
 }
 
 p {
-  color: #cbd5e1;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-  line-height: 1.6;
+  color: #94a3b8;
+  line-height: 1.7;
 }
 
-/* Clean Panel utility */
+/* ── Glass Panel ── */
 .glass-panel {
-  background: rgba(10, 10, 10, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: rgba(8, 10, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
   padding: 2rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-/* Layout */
+/* ── Layout ── */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-/* Animations */
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: #1e2235; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #2d3555; }
+
+/* ════════════════════════════
+   KEYFRAME ANIMATIONS
+════════════════════════════ */
+
+/* Title float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
 }
 
+/* Horizontal scan beam */
+@keyframes scan-beam {
+  0%   { left: -60%; opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { left: 110%; opacity: 0; }
+}
+
+/* Vertical scan line (input box top) */
+@keyframes scan {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+/* Fade-in up */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Gradient text shift */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Particle drift */
+@keyframes drift {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  15%  { opacity: 0.6; }
+  85%  { opacity: 0.5; }
+  100% { transform: translateY(-100vh) translateX(40px) scale(0.4); opacity: 0; }
+}
+
+/* Badge shimmer */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Result highlight pulse */
+@keyframes result-pulse {
+  0%, 100% { box-shadow: 0 0 30px var(--pulse-color, rgba(16,232,138,0.3)); }
+  50%       { box-shadow: 0 0 60px var(--pulse-color, rgba(16,232,138,0.6)); }
+}
+
+/* ════════════════════════════
+   SCANNER LINE (Input box)
+════════════════════════════ */
 .scanner-line {
   position: absolute;
   top: 0;
@@ -76,33 +148,80 @@ p {
   width: 100%;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-purple), transparent);
-  box-shadow: 0 0 20px 2px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 18px 3px rgba(79, 142, 247, 0.6);
   animation: scan 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   z-index: 10;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-color);
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Micro-Interaction Particles */
-.particles-container {
+/* ════════════════════════════
+   SCAN BEAM OVERLAY (horizontal)
+════════════════════════════ */
+.scan-beam {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  width: 60%;
   height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(79, 142, 247, 0.04) 20%,
+    rgba(79, 142, 247, 0.15) 50%,
+    rgba(155, 111, 245, 0.08) 80%,
+    transparent 100%
+  );
+  animation: scan-beam 1.8s ease-in-out forwards;
+  pointer-events: none;
+  z-index: 20;
+  border-radius: inherit;
+}
+
+/* ════════════════════════════
+   GRADIENT TITLE
+════════════════════════════ */
+.gradient-title {
+  background: linear-gradient(135deg, #ffffff 0%, #c7d8ff 40%, #a0b8ff 70%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s ease infinite, float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(79, 142, 247, 0.35));
+}
+
+/* ════════════════════════════
+   TECH BADGE
+════════════════════════════ */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(79, 142, 247, 0.08);
+  border: 1px solid rgba(79, 142, 247, 0.25);
+  padding: 0.45rem 1.1rem;
+  border-radius: 9999px;
+  color: var(--accent-blue);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tech-identity-line {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* ════════════════════════════
+   PARTICLES
+════════════════════════════ */
+.particles-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
   overflow: hidden;
   z-index: 1;
@@ -112,7 +231,7 @@ p {
   position: absolute;
   background: var(--accent-blue);
   border-radius: 50%;
-  opacity: 0.3;
+  opacity: 0;
   animation: drift linear infinite;
 }
 
@@ -121,9 +240,169 @@ p {
   animation-direction: reverse;
 }
 
-@keyframes drift {
-  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-  20% { opacity: 0.5; }
-  80% { opacity: 0.5; }
-  100% { transform: translateY(-100vh) translateX(50px) scale(0.5); opacity: 0; }
+.particle.active {
+  animation-duration: 6s !important;
+  opacity: 0.8;
+}
+
+/* ════════════════════════════
+   ANALYZE BUTTON
+════════════════════════════ */
+.analyze-btn {
+  background: linear-gradient(135deg, #5a9cf8 0%, #7b6ff5 100%);
+  color: #fff;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+  position: relative;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 4px 20px rgba(79, 142, 247, 0.3);
+  white-space: nowrap;
+}
+
+.analyze-btn:not(:disabled):hover {
+  transform: scale(1.03);
+  filter: brightness(1.12);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 0 28px rgba(79, 142, 247, 0.55),
+    0 0 55px rgba(155, 111, 245, 0.25),
+    0 6px 24px rgba(0,0,0,0.4);
+}
+
+.analyze-btn:not(:disabled):active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+  box-shadow: 0 0 16px rgba(79, 142, 247, 0.4);
+}
+
+.analyze-btn:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ════════════════════════════
+   PREMIUM INPUT BOX
+════════════════════════════ */
+.input-glass {
+  background: rgba(4, 6, 16, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 12px 50px rgba(0, 0, 0, 0.7),
+    0 2px 0 rgba(255,255,255,0.04) inset,
+    0 0 0 1px rgba(79, 142, 247, 0.04) inset;
+  transition: border-color 0.28s ease, box-shadow 0.28s ease;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.input-glass:hover {
+  border-color: rgba(255, 255, 255, 0.17);
+  box-shadow:
+    0 12px 50px rgba(0, 0, 0, 0.7),
+    0 0 22px rgba(79, 142, 247, 0.10),
+    0 2px 0 rgba(255,255,255,0.05) inset;
+}
+
+.input-glass:focus-within {
+  border-color: rgba(79, 142, 247, 0.55);
+  box-shadow:
+    0 12px 50px rgba(0, 0, 0, 0.7),
+    0 0 0 3px rgba(79, 142, 247, 0.13),
+    0 0 50px rgba(79, 142, 247, 0.18),
+    0 0 80px rgba(155, 111, 245, 0.08),
+    0 2px 0 rgba(255,255,255,0.06) inset;
+}
+
+/* Styled placeholder text */
+.input-glass textarea::placeholder {
+  color: #d1d5db;
+  opacity: 0.55;
+}
+
+/* Input spotlight — soft blue radial behind the box */
+.input-spotlight {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 160%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(79, 142, 247, 0.07) 0%,
+    rgba(155, 111, 245, 0.04) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+/* ════════════════════════════
+   PIPELINE ANIMATIONS
+════════════════════════════ */
+
+/* Particle flowing down a connector line */
+@keyframes flow-particle {
+  0%   { top: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Gentle float loop for model cards */
+@keyframes float-card {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
+}
+
+/* Cascading dot pulse for flow indicators */
+@keyframes dot-cascade {
+  0%, 100% { opacity: 0.2; transform: translateY(0);   }
+  50%       { opacity: 1;   transform: translateY(4px); }
+}
+
+.hero-glow-left {
+  position: absolute;
+  left: 0; top: 0;
+  width: 40%; height: 100%;
+  background: radial-gradient(ellipse at left center, var(--glow-green) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.8s ease;
+}
+
+.hero-glow-right {
+  position: absolute;
+  right: 0; top: 0;
+  width: 40%; height: 100%;
+  background: radial-gradient(ellipse at right center, var(--glow-red) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.8s ease;
+}
+
+.hero-glow-center {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; height: 60%;
+  background: radial-gradient(ellipse at center, rgba(79, 142, 247, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  animation: glow-pulse 4s ease-in-out infinite;
 }

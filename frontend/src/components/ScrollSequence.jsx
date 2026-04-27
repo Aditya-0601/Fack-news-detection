@@ -1,3 +1,9 @@
+/**
+ * ScrollSequence.jsx
+ * High-performance cinematic background component.
+ * Uses an HTML5 Canvas to map 240 high-resolution frames directly to 
+ * the user's scroll position for a stutter-free visual experience.
+ */
 import React, { useRef, useEffect, useState } from 'react';
 import { useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 

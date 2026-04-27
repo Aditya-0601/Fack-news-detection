@@ -1,3 +1,8 @@
+/**
+ * Footer.jsx
+ * Standard application footer displaying platform credits,
+ * dataset information, and model accuracy metrics.
+ */
 import React from 'react';
 
 export function Footer() {
