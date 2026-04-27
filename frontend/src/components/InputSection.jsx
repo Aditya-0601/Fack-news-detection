@@ -19,9 +19,9 @@ export function InputSection({ text, setText, onAnalyze, isLoading }) {
     onAnalyze(text);
   };
 
-  const charCount    = text.length;
-  const isReady      = charCount >= 300;
-  const charColor    = isReady ? 'var(--real-green)' : charCount > 0 ? '#94a3b8' : 'var(--text-secondary)';
+  const charCount = text.length;
+  const isReady = charCount >= 300;
+  const charColor = isReady ? 'var(--real-green)' : charCount > 0 ? '#94a3b8' : 'var(--text-secondary)';
 
   return (
     <motion.div

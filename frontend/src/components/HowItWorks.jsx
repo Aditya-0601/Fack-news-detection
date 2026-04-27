@@ -79,7 +79,7 @@ function ConvergenceConnector() {
           </linearGradient>
           <filter id="cg-glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="blur" />
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
         </defs>
 
@@ -101,13 +101,13 @@ function ConvergenceConnector() {
 
         {/* Merge burst circle at bottom */}
         <circle cx="300" cy="90" r="5" fill="rgba(155,111,245,0.95)" filter="url(#cg-glow)">
-          <animate attributeName="r"       values="4;8;4"      dur="1.6s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.6;1;0.6"  dur="1.6s" repeatCount="indefinite" />
+          <animate attributeName="r" values="4;8;4" dur="1.6s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="1.6s" repeatCount="indefinite" />
         </circle>
         {/* Outer ring pulse */}
         <circle cx="300" cy="90" r="10" fill="none" stroke="rgba(155,111,245,0.35)" strokeWidth="1.5">
-          <animate attributeName="r"       values="8;18;8"     dur="1.6s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.6;0;0.6"  dur="1.6s" repeatCount="indefinite" />
+          <animate attributeName="r" values="8;18;8" dur="1.6s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="1.6s" repeatCount="indefinite" />
         </circle>
       </svg>
     </div>
@@ -120,8 +120,8 @@ function ConvergenceConnector() {
 function StepCard({ icon, title, desc, highlight, hoverColor, delay = 0 }) {
   const [hovered, setHovered] = useState(false);
 
-  const baseColor   = highlight ? 'rgba(16,232,138,0.35)' : 'rgba(255,255,255,0.07)';
-  const glowShadow  = hoverColor
+  const baseColor = highlight ? 'rgba(16,232,138,0.35)' : 'rgba(255,255,255,0.07)';
+  const glowShadow = hoverColor
     ? `0 6px 40px rgba(0,0,0,0.55), 0 0 28px ${hoverColor}`
     : '0 6px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.03)';
 
@@ -335,7 +335,7 @@ export function HowItWorks() {
             delay={0.32}
             icon={<Database size={28} color="#9b6ff5" />}
             title="TF-IDF Vectorizer"
-            desc="Extracts 5,000 statistical n-gram features to identify linguistic patterns."
+            desc="Extracts 2,000 statistical n-gram features to identify linguistic patterns."
             accentColor="#9b6ff5"
             borderColor="rgba(155,111,245,0.22)"
             floatDelay="1s"
@@ -350,7 +350,7 @@ export function HowItWorks() {
           delay={0.4}
           icon={<Cpu size={22} color="#9b6ff5" />}
           title="3. Feature Fusion"
-          desc="Concatenation of 768 semantic + 5,000 statistical vectors → 5,768 total feature dimensions."
+          desc="Concatenation of 768 semantic + 2,000 statistical vectors → 2,768 total feature dimensions."
           hoverColor="rgba(155,111,245,0.25)"
         />
 
@@ -361,7 +361,7 @@ export function HowItWorks() {
           delay={0.52}
           icon={<ShieldCheck size={22} color="var(--real-green)" />}
           title="4. Final Classification"
-          desc="XGBoost Gradient Boosting processes all 5,768 features to output a calibrated REAL or FAKE probability."
+          desc="XGBoost Gradient Boosting processes all 2,768 features to output a calibrated REAL or FAKE probability."
           highlight={true}
           hoverColor="rgba(16,232,138,0.3)"
         />

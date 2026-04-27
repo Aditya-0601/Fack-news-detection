@@ -27,7 +27,7 @@ export function HeroSection({ result }) {
   }, []);
 
   // Dynamic glow opacity based on result
-  const leftGlowOpacity  = isFake ? 0.3 : isReal ? 1.8 : 1;
+  const leftGlowOpacity = isFake ? 0.3 : isReal ? 1.8 : 1;
   const rightGlowOpacity = isReal ? 0.3 : isFake ? 1.8 : 1;
 
   return (
@@ -36,7 +36,7 @@ export function HeroSection({ result }) {
       <ScrollSequence />
 
       {/* Split glow zones */}
-      <div className="hero-glow-left"  style={{ opacity: leftGlowOpacity,  transition: 'opacity 1s ease' }} />
+      <div className="hero-glow-left" style={{ opacity: leftGlowOpacity, transition: 'opacity 1s ease' }} />
       <div className="hero-glow-right" style={{ opacity: rightGlowOpacity, transition: 'opacity 1s ease' }} />
       <div className="hero-glow-center" />
 
@@ -64,12 +64,12 @@ export function HeroSection({ result }) {
                 key={i}
                 className="particle"
                 style={{
-                  width:  `${Math.random() * 2.5 + 0.8}px`,
+                  width: `${Math.random() * 2.5 + 0.8}px`,
                   height: `${Math.random() * 2.5 + 0.8}px`,
-                  left:   `${Math.random() * 100}%`,
-                  top:    `${Math.random() * 100 + 100}vh`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100 + 100}vh`,
                   animationDuration: `${Math.random() * 12 + 10}s`,
-                  animationDelay:    `${Math.random() * 6}s`,
+                  animationDelay: `${Math.random() * 6}s`,
                 }}
               />
             ))}

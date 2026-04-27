@@ -13,10 +13,10 @@ export function ResultCard({ result }) {
   const isReal = result.label === 'REAL';
   const confidencePercent = (result.confidence * 100).toFixed(1);
 
-  const color    = isReal ? 'var(--real-green)' : 'var(--fake-red)';
-  const bgColor  = isReal ? 'rgba(16, 232, 138, 0.08)' : 'rgba(240, 79, 79, 0.08)';
+  const color = isReal ? 'var(--real-green)' : 'var(--fake-red)';
+  const bgColor = isReal ? 'rgba(16, 232, 138, 0.08)' : 'rgba(240, 79, 79, 0.08)';
   const glowColor = isReal ? 'rgba(16, 232, 138, 0.25)' : 'rgba(240, 79, 79, 0.25)';
-  const Icon     = isReal ? CheckCircle : AlertTriangle;
+  const Icon = isReal ? CheckCircle : AlertTriangle;
 
   return (
     <motion.div

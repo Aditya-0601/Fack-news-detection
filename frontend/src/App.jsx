@@ -27,12 +27,14 @@ function App() {
       return;
     }
 
+    const processedText = inputText.toLowerCase();
+
     setIsLoading(true);
     setError(null);
     setResult(null);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/predict', { text: inputText });
+      const response = await axios.post('http://127.0.0.1:5000/predict', { text: processedText });
       setResult(response.data);
 
       // Smooth scroll to result after a short delay
